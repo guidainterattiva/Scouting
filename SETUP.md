@@ -56,8 +56,9 @@ La chiave "publishable" è pensata per stare nel browser: i dati sono protetti d
 
 ## 7. Keep-alive
 Il file `.github/workflows/keep-alive.yml` interroga il database ogni 3 giorni, così il progetto gratuito non va in pausa.
-Puoi provarlo da **GitHub → Actions → Supabase keep-alive → Run workflow**.
-Nota: GitHub disattiva i job programmati nei repo senza commit da 60 giorni (manda una email): basta riattivarlo dalla scheda Actions.
+Se nel repo non ci sono commit da 30 giorni, lo stesso job aggiorna `.github/keepalive.txt`: così GitHub
+non sospende mai il job programmato (lo farebbe dopo 60 giorni senza attività).
+Puoi provarlo da **GitHub → Actions → Supabase keep-alive → Run workflow** (spunta verde = ok).
 
 ## Gestione utenti in futuro
 - Nuovo utente: ripeti i passi 4 e 5.
