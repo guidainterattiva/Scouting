@@ -229,6 +229,11 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);outline-
    ========================================================== */
 const SUPABASE_URL='INSERISCI_PROJECT_URL';
 const SUPABASE_KEY='INSERISCI_PUBLISHABLE_KEY';
+/* Accesso con nome utente: "presidente" diventa presidente@scouting.example.com
+   (dominio riservato, nessuna email viene mai inviata). Chi scrive un'email completa la usa così com'è. */
+const USER_DOMAIN='scouting.example.com';
+const toEmail=u=>{u=String(u||'').trim().toLowerCase();return u.includes('@')?u:u+'@'+USER_DOMAIN;};
+const userLabel=e=>String(e||'').endsWith('@'+USER_DOMAIN)?e.slice(0,-(USER_DOMAIN.length+1)):e;
 
 /* =================== UTILITÀ =================== */
 const $=s=>document.querySelector(s);
@@ -346,7 +351,7 @@ const configured=()=>!/INSERISCI/.test(SUPABASE_URL+SUPABASE_KEY);
 function showLogin(msg){
   const el=$('#login');
   el.innerHTML=`<div class="login-box"><div class="login-logo">${ICON.ball}</div><h1>Scouting</h1><p class="muted">Accedi con le credenziali ricevute</p>
-  ${configured()?`<form id="fl" autocomplete="on"><label>Email<input name="email" type="email" autocomplete="username" required></label><label>Password<input name="password" type="password" autocomplete="current-password" required></label><div id="lerr" class="lerr">${esc(msg||'')}</div><button class="btn block" type="submit">Accedi</button></form><div class="lnote">Gli accessi vengono creati dall'amministratore dell'app.</div>`
+  ${configured()?`<form id="fl" autocomplete="on"><label>Nome utente<input name="email" type="text" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" required></label><label>Password<input name="password" type="password" autocomplete="current-password" required></label><div id="lerr" class="lerr">${esc(msg||'')}</div><button class="btn block" type="submit">Accedi</button></form><div class="lnote">Gli accessi vengono creati dall'amministratore dell'app.</div>`
   :'<div class="empty-s">App non ancora configurata: inserisci Project URL e chiave di Supabase in index.html.</div>'}</div>`;
   el.hidden=false;
 }
@@ -355,9 +360,9 @@ async function wipeLocal(){for(const s of [...TYPES,'deleted','outbox','meta'])a
 async function doLogin(f){
   const btn=f.querySelector('button[type=submit]'),err=$('#lerr');btn.disabled=true;err.textContent='';
   try{
-    const email=f.elements.email.value.trim(),password=f.elements.password.value;
+    const email=toEmail(f.elements.email.value),password=f.elements.password.value;
     const {data,error}=await sb.auth.signInWithPassword({email,password});
-    if(error){err.textContent=/invalid/i.test(error.message)?'Email o password non corretti':(navigator.onLine?error.message:'Serve la connessione per accedere');return;}
+    if(error){err.textContent=/invalid/i.test(error.message)?'Nome utente o password non corretti':(navigator.onLine?error.message:'Serve la connessione per accedere');return;}
     const prof=await loadProfile(data.user);
     if(!prof){await sb.auth.signOut();err.textContent='Utente non abilitato: contatta l\'amministratore.';return;}
     const prev=await metaGet('me');
@@ -515,7 +520,7 @@ function vMatch(id){
 function vAccount(){
   const ios=/iphone|ipad|ipod/i.test(navigator.userAgent);
   return `<div class="pad">
-  <div class="card me"><div class="av ph">${esc((ME.nome||ME.email||'?')[0].toUpperCase())}</div><div class="pc-main"><b>${esc(ME.nome||'')}</b><div class="muted">${esc(ME.email||'')}</div><span class="role">${isScout()?'Scout · inserisce e modifica':'Staff · consulta e commenta'}</span></div></div>
+  <div class="card me"><div class="av ph">${esc((ME.nome||ME.email||'?')[0].toUpperCase())}</div><div class="pc-main"><b>${esc(ME.nome||'')}</b><div class="muted">${esc(userLabel(ME.email||''))}</div><span class="role">${isScout()?'Scout · inserisce e modifica':'Staff · consulta e commenta'}</span></div></div>
   <div class="card"><h3>Sincronizzazione</h3><p id="syncstate" style="margin-bottom:8px">${syncText(true)}</p>
     <p class="muted">I dati sono salvati anche su questo dispositivo: l'app funziona senza connessione e invia le modifiche appena torna la rete.</p>
     <button class="btn ghost block" data-a="syncNow">Sincronizza ora</button></div>
