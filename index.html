@@ -581,6 +581,11 @@ function vAccount(){
     ${isScout()?'<label class="btn ghost block">Importa backup<input type="file" name="importfile" accept=".json,application/json" hidden></label>':''}</div>
   <div class="card"><h3>Installa come app</h3>
     <p class="muted">${ios?'Safari → tasto Condividi → <b>Aggiungi alla schermata Home</b>.':'Chrome → menu ⋮ → <b>Installa app</b> (o “Aggiungi a schermata Home”).'} Così si apre a schermo intero e funziona anche senza connessione.</p></div>
+  <div class="card"><h3>Cambia password</h3>
+    <form id="fpw" autocomplete="off"><input type="text" name="username" autocomplete="username" value="${esc(userLabel(ME.email||''))}" hidden>
+    <label>Nuova password<input name="p1" type="password" autocomplete="new-password" minlength="8" required></label>
+    <label>Ripeti la nuova password<input name="p2" type="password" autocomplete="new-password" minlength="8" required></label>
+    <button class="btn ghost block" type="submit">Salva nuova password</button></form></div>
   <button class="btn danger block" data-a="logout">Esci</button>
   </div>`;
 }
@@ -846,6 +851,19 @@ document.addEventListener('change',async e=>{
 document.addEventListener('submit',async e=>{
   e.preventDefault();const f=e.target;
   if(f.id==='fl'){doLogin(f);return;}
+  if(f.id==='fpw'){
+    const p1=f.elements.p1.value,p2=f.elements.p2.value;
+    if(p1.length<8)return toast('La password deve avere almeno 8 caratteri');
+    if(p1!==p2)return toast('Le due password non coincidono');
+    if(!navigator.onLine)return toast('Serve la connessione per cambiare password');
+    const btn=f.querySelector('button');btn.disabled=true;
+    try{const {error}=await sb.auth.updateUser({password:p1});
+      if(error)toast(/different|same/i.test(error.message)?'La nuova password deve essere diversa dalla attuale':/weak|short|characters/i.test(error.message)?'Password troppo debole':'Errore: '+error.message);
+      else{f.reset();toast('Password aggiornata');}
+    }catch(e){toast('Errore di connessione');}
+    finally{btn.disabled=false;}
+    return;
+  }
   if(f.id==='fc'){
     const testo=f.elements.testo.value.trim();if(!testo)return;
     await save('comments',{id:uid(),playerId:f.dataset.id,testo,autoreId:ME.id,autoreNome:ME.nome||ME.email});
