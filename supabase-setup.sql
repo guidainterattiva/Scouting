@@ -109,7 +109,14 @@ create policy "records: commento modifica" on public.records
   using (public.is_member() and tipo = 'comments' and data->>'autoreId' = auth.uid()::text)
   with check (tipo = 'comments' and data->>'autoreId' = auth.uid()::text);
 
--- ---------- 3. Funzione "ping" per tenere attivo il progetto gratuito
+-- ---------- 3. Permessi espliciti (necessari se "Automatically expose new tables" è disattivato)
+grant usage on schema public to anon, authenticated;
+revoke all on public.profili, public.records from anon;
+grant select on public.profili to authenticated;
+grant select, insert, update on public.records to authenticated;
+grant execute on function public.is_member(), public.is_scout() to authenticated;
+
+-- ---------- 4. Funzione "ping" per tenere attivo il progetto gratuito
 create or replace function public.ping() returns integer
 language sql stable as $$ select 1 $$;
 grant execute on function public.ping() to anon, authenticated;
