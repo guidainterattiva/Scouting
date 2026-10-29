@@ -50,7 +50,7 @@ on conflict (id) do nothing;
 -- ---------- 2. Archivio dati (giocatori, partite, osservazioni, commenti)
 create table if not exists public.records (
   id          uuid primary key,
-  tipo        text not null check (tipo in ('players','matches','reports','comments')),
+  tipo        text not null check (tipo in ('players','matches','reports','comments','photos')),
   data        jsonb not null default '{}'::jsonb,
   deleted     boolean not null default false,
   updated_at  timestamptz not null default now(),
@@ -120,6 +120,8 @@ grant execute on function public.is_member(), public.is_scout() to authenticated
 create or replace function public.ping() returns integer
 language sql stable as $$ select 1 $$;
 grant execute on function public.ping() to anon, authenticated;
+
+-- Per la galleria foto esegui anche supabase-foto.sql
 
 -- =====================================================================
 --  DOPO aver creato gli utenti in Authentication → Users:
