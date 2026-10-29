@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Scouting</title>
-<meta name="theme-color" content="#0d4f33">
+<title>Scouting UniPomezia</title>
+<meta name="theme-color" content="#1c2b5a">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -12,15 +12,17 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Scouting">
 <style>
-:root{--bg:#f3f5f4;--card:#fff;--ink:#14201b;--muted:#64746c;--line:#e1e7e4;--accent:#0f6b43;--accent-2:#e6f2eb;--danger:#b42318;--top:#0d4f33;--star:#e0a100;--warn-bg:#fff4dc;--warn:#7a4b00;--shadow:0 1px 2px rgba(0,0,0,.05),0 2px 8px rgba(0,0,0,.04)}
-@media (prefers-color-scheme:dark){:root{--bg:#0e1412;--card:#18201d;--ink:#e8efeb;--muted:#93a39b;--line:#28332e;--accent:#45c486;--accent-2:#1a2b22;--danger:#ff7a6e;--top:#0a2a1d;--warn-bg:#3a2c10;--warn:#ffd68a;--shadow:none}}
+:root{--bg:#f2f3f7;--card:#fff;--ink:#161b2e;--muted:#646a80;--line:#e0e3ec;--accent:#8a2433;--accent-2:#f6e8eb;--danger:#b42318;--top:#1c2b5a;--top-2:#8a2433;--star:#e0a100;--warn-bg:#fff4dc;--warn:#7a4b00;--shadow:0 1px 2px rgba(0,0,0,.05),0 2px 8px rgba(0,0,0,.04)}
+@media (prefers-color-scheme:dark){:root{--bg:#0d1020;--card:#171b2e;--ink:#e9ebf3;--muted:#9aa0b8;--line:#272c44;--accent:#e57d8e;--accent-2:#2c1a22;--danger:#ff7a6e;--top:#141f45;--top-2:#6e1c29;--warn-bg:#3a2c10;--warn:#ffd68a;--shadow:none}}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
 button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer}
-.top{position:sticky;top:0;z-index:10;background:var(--top);color:#fff;display:flex;align-items:center;gap:8px;padding:calc(10px + env(safe-area-inset-top)) 16px 10px}
+.top{position:sticky;top:0;z-index:10;background:var(--top);border-bottom:3px solid var(--top-2);color:#fff;display:flex;align-items:center;gap:8px;padding:calc(10px + env(safe-area-inset-top)) 16px 10px}
 .brand{font-weight:750;letter-spacing:.3px;display:flex;gap:8px;align-items:center;font-size:17px}
 .brand svg{width:24px;height:24px}
+.bt{display:flex;flex-direction:column;line-height:1.05}
+.bt small{font-size:10.5px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;opacity:.75}
 .sync{margin-left:auto;display:flex;align-items:center;gap:6px;background:none;border:0;color:#fff;font-size:12px;opacity:.92;padding:6px 4px;white-space:nowrap}
 .sync i{width:8px;height:8px;border-radius:50%;background:#7ee2a8;flex:none}
 .sync.s-sync i{background:#8cc4ff;animation:pulse 1s infinite}
@@ -162,29 +164,32 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);outline-
 #login{position:fixed;inset:0;z-index:70;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:24px;overflow:auto}
 #login[hidden]{display:none}
 .login-box{width:100%;max-width:360px}
-.login-logo{width:76px;height:76px;border-radius:22px;background:var(--top);color:#fff;display:grid;place-items:center;margin:0 auto 14px}
+.login-logo{width:76px;height:76px;border-radius:22px;background:var(--top);box-shadow:inset 0 -6px 0 var(--top-2);color:#fff;display:grid;place-items:center;margin:0 auto 14px}
 .login-logo svg{width:44px;height:44px}
-.login-box h1{text-align:center;margin:0 0 4px;color:var(--accent)}
+.login-box h1{text-align:center;margin:0;color:var(--top)}
+@media (prefers-color-scheme:dark){.login-box h1{color:var(--ink)}}
+.login-club{text-align:center;font-size:12px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--accent);margin:2px 0 10px}
 .login-box>p{text-align:center;margin:0 0 22px}
 .lerr{color:var(--danger);font-size:13.5px;min-height:18px;margin:-4px 0 8px}
 .lnote{font-size:12.5px;color:var(--muted);text-align:center;margin-top:14px}
 #print{display:none}
 /* ---------- STAMPA / PDF ---------- */
 .pr{font:10.5pt/1.42 Helvetica,Arial,sans-serif;color:#111;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-.pr-head{border-bottom:3px solid #0d4f33;padding-bottom:6px;margin-bottom:14px}
-.pr-head h1{font-size:16pt;margin:0;color:#0d4f33;letter-spacing:.4px;text-transform:uppercase}
+.pr-head{border-bottom:3px solid #1c2b5a;box-shadow:0 3px 0 #8a2433;padding-bottom:6px;margin-bottom:14px}
+.pr-club{font-size:8.5pt;font-weight:700;letter-spacing:1.5px;color:#8a2433;text-transform:uppercase}
+.pr-head h1{font-size:16pt;margin:0;color:#1c2b5a;letter-spacing:.4px;text-transform:uppercase}
 .pr-head .s{font-size:11pt;color:#333;margin-top:2px;font-weight:600}
 .pr-prof{break-inside:avoid;page-break-inside:avoid;border:1px solid #cfd6d2;border-radius:6px;padding:10px 12px;margin-bottom:12px}
-.pr-prof h2{font-size:12.5pt;margin:0 0 8px;color:#0d4f33}
+.pr-prof h2{font-size:12.5pt;margin:0 0 8px;color:#1c2b5a}
 .pr-top{display:flex;gap:14px;align-items:flex-start}
 .pr-top img,.pr-ph{width:88px;height:108px;object-fit:cover;border-radius:4px;flex:none;border:1px solid #ddd;background:#eef3f0}
 .pr-tbl{border-collapse:collapse;font-size:10pt}
 .pr-tbl td{padding:1.5px 12px 1.5px 0;vertical-align:top}
 .pr-tbl td:first-child{color:#666;white-space:nowrap}
 .pr-g{display:inline-block;margin-top:6px;font-weight:700;padding:2px 8px;border:1.5px solid currentColor;border-radius:4px;font-size:9.5pt}
-.pr-sub{font-size:10.5pt;font-weight:700;margin:10px 0 2px;color:#0d4f33;border-bottom:1px solid #dde3e0;padding-bottom:2px}
+.pr-sub{font-size:10.5pt;font-weight:700;margin:10px 0 2px;color:#1c2b5a;border-bottom:1px solid #dde3e0;padding-bottom:2px}
 .pr-area{margin-top:5px}
-.pr-area b{font-size:9pt;text-transform:uppercase;letter-spacing:.3px;color:#0d4f33}
+.pr-area b{font-size:9pt;text-transform:uppercase;letter-spacing:.3px;color:#8a2433}
 .pr-area p{margin:1px 0 0;white-space:pre-wrap}
 .pr-st{color:#c58a00;font-size:10pt;margin-left:4px}
 .pr-st i{color:#ccc;font-style:normal}
@@ -200,7 +205,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);outline-
 <body>
 <div id="app">
   <header class="top">
-    <div class="brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9.5"/><path d="M12 7.2l4 2.9-1.5 4.7h-5L8 10.1z" fill="currentColor" stroke="none"/><path d="M12 2.5v4.7M16 10.1l4.6-1.6M14.5 14.8l2.8 4M9.5 14.8l-2.8 4M8 10.1L3.4 8.5"/></svg>Scouting</div>
+    <div class="brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9.5"/><path d="M12 7.2l4 2.9-1.5 4.7h-5L8 10.1z" fill="currentColor" stroke="none"/><path d="M12 2.5v4.7M16 10.1l4.6-1.6M14.5 14.8l2.8 4M9.5 14.8l-2.8 4M8 10.1L3.4 8.5"/></svg><span class="bt">Scouting<small>UniPomezia</small></span></div>
     <button id="sync" class="sync" data-go="/account"><i></i><span>…</span></button>
     <button class="findbtn" data-a="find"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>Trova</button>
   </header>
@@ -350,7 +355,7 @@ document.addEventListener('visibilitychange',()=>{if(!document.hidden)scheduleSy
 const configured=()=>!/INSERISCI/.test(SUPABASE_URL+SUPABASE_KEY);
 function showLogin(msg){
   const el=$('#login');
-  el.innerHTML=`<div class="login-box"><div class="login-logo">${ICON.ball}</div><h1>Scouting</h1><p class="muted">Accedi con le credenziali ricevute</p>
+  el.innerHTML=`<div class="login-box"><div class="login-logo">${ICON.ball}</div><h1>Scouting</h1><div class="login-club">A.S.D. UniPomezia</div><p class="muted">Accedi con le credenziali ricevute</p>
   ${configured()?`<form id="fl" autocomplete="on"><label>Nome utente<input name="email" type="text" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" required></label><label>Password<input name="password" type="password" autocomplete="current-password" required></label><div id="lerr" class="lerr">${esc(msg||'')}</div><button class="btn block" type="submit">Accedi</button></form><div class="lnote">Gli accessi vengono creati dall'amministratore dell'app.</div>`
   :'<div class="empty-s">App non ancora configurata: inserisci Project URL e chiave di Supabase in index.html.</div>'}</div>`;
   el.hidden=false;
@@ -616,7 +621,7 @@ function printHTML(html,title){
 }
 function pdfMatch(id){
   const m=M(id);const reps=sortedMatchReps(id);
-  const html=`<div class="pr-head"><h1>Scheda tecnica di scouting</h1><div class="s">${esc(matchTitle(m))}${m.categoria?' · '+esc(m.categoria):''} · ${fmtD(m.data)}${m.risultato?' · '+esc(m.risultato):''}</div></div>
+  const html=`<div class="pr-head"><div class="pr-club">A.S.D. UniPomezia</div><h1>Scheda tecnica di scouting</h1><div class="s">${esc(matchTitle(m))}${m.categoria?' · '+esc(m.categoria):''} · ${fmtD(m.data)}${m.risultato?' · '+esc(m.risultato):''}</div></div>
   ${m.note?`<p class="pre">${esc(m.note)}</p>`:''}
   ${reps.map((r,i)=>{const p=P(r.playerId)||{};return `<div class="pr-prof"><h2>${i+1}° profilo: ${esc(fullName(p))}${(r.ruoloPartita||p.ruolo)?` <span style="font-weight:400;color:#555">(${esc(r.ruoloPartita||p.ruolo)})</span>`:''}</h2><div class="pr-top">${prPhoto(p)}<div>${prTable(p,r)}${prG(p.giudizio)}</div></div><div class="pr-sub">Analisi tecnica e tattica</div>${prAreas(r)||'<p>—</p>'}</div>`;}).join('')||'<p>Nessun giocatore inserito.</p>'}
   ${prFoot()}`;
@@ -625,7 +630,7 @@ function pdfMatch(id){
 function pdfPlayer(id){
   const p=P(id);const reps=repsOfPlayer(id);const md=medie(id);const cs=commentsOf(id);
   const med=AREE.filter(([k])=>md[k]).map(([k,l])=>`${l}${prStars(md[k])}`).join(' &nbsp; ');
-  const html=`<div class="pr-head"><h1>Scheda giocatore</h1><div class="s">${esc(fullName(p))}</div></div>
+  const html=`<div class="pr-head"><div class="pr-club">A.S.D. UniPomezia</div><h1>Scheda giocatore</h1><div class="s">${esc(fullName(p))}</div></div>
   <div class="pr-prof"><div class="pr-top">${prPhoto(p)}<div><h2 style="margin-bottom:4px">${esc(fullName(p))}</h2>${prTable(p)}${prG(p.giudizio)}</div></div>
   ${med||md.voto?`<div class="pr-sub">Media valutazioni (${reps.length} osservazioni)</div><div>${med}${md.voto?` &nbsp; Voto medio <b>${md.voto.toFixed(1)}</b>`:''}</div>`:''}
   ${p.note?`<div class="pr-sub">Note generali</div><p class="pre" style="margin:2px 0">${esc(p.note)}</p>`:''}</div>
